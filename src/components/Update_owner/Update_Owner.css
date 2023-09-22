@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.Owner_input {
+    padding: 20px;
+    font-family: 'Poppins';
+
+}
+
+.Owner_require {
+    height: 20px;
+    font-family: 'Poppins';
+}
+
+.Owner_select {
+    font-family: 'Poppins';
+    width: 100%;
+}
+
+.Owner_DOB {
+    width: 100%;
+    font-family: 'Poppins';
+    align-items: center;
+}

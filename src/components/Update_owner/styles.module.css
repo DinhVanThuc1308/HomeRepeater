@@ -1,0 +1,212 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.create-form {
+    width: 100%;
+    padding: 16px;
+    background-color: #fff;
+    border-radius: 15px;
+
+}
+
+.form-container {
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+}
+
+.form-row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.form-row-last {
+    width: 81%;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.row-item-last {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.row-item {
+    width: 38%;
+    display: flex;
+    flex-direction: column;
+    /* gap: 10px; */
+}
+
+
+.title-label {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+
+    /* Neutral Light/2 */
+
+    color: #939393;
+}
+
+
+.choose-container {
+    width: 100%;
+    margin-top: 32px;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: row;
+    /* Neutral Dark/5 */
+
+    border: 1px solid #DDE4EE;
+    border-radius: 8px;
+    margin-bottom: 0 !important;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.checkbox-garage {
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-right: 1px solid #DDE4EE;
+    gap: 10px;
+
+}
+
+.checkbox-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-height: 99px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.list-garage {
+    width: 50%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.pickitem {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.textarea-form {
+    width: 100%;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+    font-size: 14px;
+}
+
+.description-form {
+    width: 50%;
+}
+
+.policy-form {
+    width: 50%;
+}
+
+.btn-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.btn-save {
+    width: 95px;
+    height: 40px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+
+    text-align: center;
+
+    /* Neutral Dark/6 */
+
+    color: #F1F4F9;
+    background: #8767E1;
+    border: 1px solid #F1F4F9;
+    border-radius: 8px;
+}
+
+.btn-cancel {
+    width: 95px;
+    height: 40px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+
+    text-align: center;
+
+    /* Neutral Dark/6 */
+
+    color: #8767E1;
+    background: #F1F4F9;
+    border: 1px solid #8767E1;
+    border-radius: 8px;
+}
+
+.btn-cancel:hover {
+    transform: scale(1.0);
+    cursor: pointer;
+
+}
+
+.btn-save:hover {
+    transform: scale(1.0);
+    cursor: pointer;
+
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background-color: #c1c1c1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}

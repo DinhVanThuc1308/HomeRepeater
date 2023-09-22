@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.ant-transfer-list {
+    width: 50% !important;
+    height: 100% !important;
+    margin-top: 50px;
+    gap: 5px !important;
+}
+
+.ant-transfer-operation {
+    display: none !important;
+}
+
+.ant-transfer-list-header {
+    /* display: none !important; */
+}
+
+.ant-transfer-list-header-title {
+    display: none;
+}
+
+h2 {
+    position: relative;
+    font-family: 'Poppins';
+    color: #939393;
+    width: 70px;
+    height: 24px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+
+}
+
+.ant-transfer-list .ant-transfer-list-body .ant-transfer-list-body-search-wrapper .ant-input-affix-wrapper {
+    /* display: none; */
+}
