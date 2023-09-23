@@ -31,7 +31,7 @@ const SearchAndFilter = () => (
             </Space.Compact>
             <Select defaultValue="Status" options={options2} style={{ paddingLeft: '28px', width: ' 296px', }} />
             <Button style={{ backgroundColor: '#8767E1', marginLeft: '160px', }}>
-                <Link to="/create_owner">Add owner</Link></Button>
+                <Link to="/create_owner">+</Link></Button>
 
 
         </span>

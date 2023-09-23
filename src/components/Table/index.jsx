@@ -6,27 +6,9 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../shared/services/http-client.js';
 
-import { Button, Input, Select } from 'antd';
+import { Button, Input, Select, Checkbox } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import './style.css';
-
-const fakeData = [
-  {
-    id: 1,
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    phoneNumber: '123-456-7890',
-    status: 'Active',
-  },
-  {
-    id: 2,
-    name: 'Jane Smith',
-    email: 'janesmith@example.com',
-    phoneNumber: '987-654-3210',
-    status: 'Inactive',
-  },
-  // Thêm các hàng dữ liệu giả khác ở đây
-];
 
 const options = [
   {
@@ -38,6 +20,7 @@ const options = [
     label: 'Email',
   },
 ];
+
 const options2 = [
   {
     value: 'All',
@@ -52,11 +35,44 @@ const options2 = [
     label: 'Inactive',
   },
 ];
+const fakeData = [
+  {
+    id: 1,
+    name: 'Product A',
+    deviceInfo: '12v 30A',
+    customer: 'Customer X',
+    status: 'Active',
+    createdTime: '2023-09-23 10:00:00',
+    public: true, // Giá trị checkbox cho cột "public"
+    isGateway: false, // Giá trị checkbox cho cột "is gateway"
+  },
+  {
+    id: 2,
+    name: 'Product B',
+    deviceInfo: '24v 40A',
+    customer: 'Customer Y',
+    status: 'Inactive',
+    createdTime: '2023-09-22 14:30:00',
+    public: false,
+    isGateway: true,
+  },
+  {
+    id: 3,
+    name: 'Product C',
+    deviceInfo: '18v 35A',
+    customer: 'Customer Z',
+    status: 'Active',
+    createdTime: '2023-09-21 16:45:00',
+    public: true,
+    isGateway: true,
+  },
+  // Thêm các hàng dữ liệu thực tế của bạn ở đây
+];
+
+
 
 function App() {
   const [data, setData] = useState(fakeData);
-
-  // const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('All');
   const [TypeSearch, setTypeSearch] = useState('Name');
@@ -68,8 +84,10 @@ function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [detailedInfo, setDetailedInfo] = useState(null);
 
-  const handleOpenModal = (info) => {
-    setDetailedInfo(info);
+
+
+  const handleOpenModal = (user) => {
+    setDetailedInfo(user);
     setIsModalVisible(true);
   };
 
@@ -94,13 +112,12 @@ function App() {
     setConfirmModalVisible(false);
   };
 
-
   const callApi = async () => {
     let params = {
       'pagination[page]': currentPage,
       'pagination[pageSize]': pageSize,
-
     };
+
     if (search === 'All') {
       params = '';
     } else if (status === true) {
@@ -121,19 +138,18 @@ function App() {
 
     console.log(response);
 
-    const users = response.map(user => ({
+    const users = response.data.map(user => ({
       id: user.id,
       name: user.fullname,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
+      deviceInfo: user.deviceInfo,
+      customer: user.customer,
       status: user.blocked === true ? 'Inactive' : 'Active',
-
     }));
 
     setData([...users]);
     setTotalItems(response.meta.pagination.total);
-
   };
+
   useEffect(() => {
     callApi();
   }, []);
@@ -145,7 +161,6 @@ function App() {
       callApi();
     }, 2000);
 
-
     // Clear timeout if the component is unmounted
     return () => clearTimeout(debounceTimer);
   }, [search, status, pageSize, currentPage]);
@@ -156,19 +171,24 @@ function App() {
       dataIndex: 'id',
     },
     {
+      title: 'Thời gian tạo',
+      dataIndex: 'createdTime',
+      key: 'createdTime',
+    },
+    {
       title: 'Tên sản phẩm',
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: 'Thông tin thiết bị',
+      dataIndex: 'deviceInfo',
+      key: 'deviceInfo',
     },
     {
-      title: 'Phone number',
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber',
+      title: 'Khách hàng',
+      dataIndex: 'customer',
+      key: 'customer',
     },
     {
       title: 'Status',
@@ -176,20 +196,31 @@ function App() {
       key: 'status',
     },
     {
+      title: 'Public',
+      dataIndex: 'public',
+      key: 'public',
+      render: (text, user) => (
+        <Checkbox checked={text} disabled />
+      ),
+    },
+    {
+      title: 'Is Gateway',
+      dataIndex: 'isGateway',
+      key: 'isGateway',
+      render: (text, user) => (
+        <Checkbox checked={text} disabled />
+      ),
+    },
+    {
       title: 'Action',
       key: 'action',
       dataIndex: 'action',
       render: (text, user) => (
         <Space key={user.id} size="middle">
-          <button onClick={() => handleOpenModal(
-            user.id,
-            user.name,
-            user.email,
-            user.phoneNumber,
-            user.status,
-          )
-
-          }>
+          <button
+            style={{ border: 'none', backgroundColor: '#fff' }}
+            onClick={() => handleOpenModal(user)}
+          >
             <img src={eye} alt="" style={{ width: '14.05px', height: '16.03px' }} />
           </button>
           <Link to={`/GarageOwner/update/${user.id}`}>
@@ -207,11 +238,12 @@ function App() {
     },
   ];
 
+
   return (
     <div style={{ marginTop: 0 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <h1 style={{ fontFamily: 'Poppins', fontSize: 20 }}>
-          All Garage Owner
+          Devices
         </h1>
         <Button
           style={{
@@ -223,7 +255,7 @@ function App() {
           }}
           className="custom-button"
         >
-          <Link to="/GarageOwner/create">Add Owner</Link>
+          <Link to="/GarageOwner/create">Add Devices</Link>
         </Button>
       </div>
       <div className="div">
@@ -269,7 +301,6 @@ function App() {
           total: totalItems,
           onChange: (page, pageSize) => {
             setCurrentPage(page);
-
           },
         }} />
       </div>
@@ -284,23 +315,32 @@ function App() {
         <p>Are you sure you want to delete this item?</p>
       </Modal>
       <Modal
-        title="Detailed Information"
+        title="Thông tin chi tết"
         visible={isModalVisible}
         onCancel={handleCloseModal}
         footer={null}
+        // set w h chiếm 70% màn hình
+        width="70%"
+        height="70%"
+        centered
+
+
       >
         {/* Modal content */}
         {detailedInfo && (
           <div>
-            <p>Name: {detailedInfo.name}</p>
-            <p>Email: {detailedInfo.email}</p>
-            <p>Phone number: {detailedInfo.phoneNumber}</p>
+            <p>Tên sản phẩm: {detailedInfo.name}</p>
+            <p>Thông tin thiết bị: {detailedInfo.deviceInfo}</p>
+            <p>Khách hàng: {detailedInfo.customer}</p>
             <p>Status: {detailedInfo.status}</p>
-
+            <p>Thời gian tạo: {detailedInfo.createdTime}</p>
+            <p>Public: {detailedInfo.public ? 'Có' : 'Không'}</p>
+            <p>Is Gateway: {detailedInfo.isGateway ? 'Có' : 'Không'}</p>
             {/* Add other fields here */}
           </div>
         )}
       </Modal>
+
     </div>
   );
 }
