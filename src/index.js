@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/reset.css';
 import './index.css';
-import Slide_bar from './components/Slider_bar';
+
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
 
@@ -16,7 +16,6 @@ root.render(
   <StrictMode>
     <AuthProvider>
       <BrowserRouter>
-        {/* <Slide_bar /> */}
         <App />
       </BrowserRouter>
     </AuthProvider>

@@ -2,9 +2,9 @@ import Table from "../../components/Table";
 import React from "react";
 import Slide_bar from "../../components/Slider_bar";
 
-function GarageOwner_page() {
+function Devices_page() {
     return (
-        <div className="GarageOwner_page" >
+        <div className="Devices_page" >
 
 
             <Slide_bar>
@@ -17,4 +17,4 @@ function GarageOwner_page() {
         </div>
     );
 }
-export default GarageOwner_page;
+export default Devices_page;

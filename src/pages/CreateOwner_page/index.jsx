@@ -1,15 +1,15 @@
 import React from 'react';
 import SlideBar from '../../components/Slider_bar';
-import CreateOwner from '../../components/CreateOwner';
+import AddDevice from '../../components/AddDevice';
 
-function CreateOwnerPage() {
+function Add_Device() {
   return (
-    <div className="CreateOwner_page">
+    <div className="addDevice">
       <SlideBar>
-        <CreateOwner></CreateOwner>
+        <AddDevice></AddDevice>
       </SlideBar>
     </div>
   );
 }
 
-export default CreateOwnerPage;
+export default Add_Device;

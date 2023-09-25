@@ -255,7 +255,7 @@ function App() {
           }}
           className="custom-button"
         >
-          <Link to="/GarageOwner/create">Add Devices</Link>
+          <Link to="/devices/add_device">Add Devices</Link>
         </Button>
       </div>
       <div className="div">
