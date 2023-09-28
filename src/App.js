@@ -2,23 +2,24 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 // import Change_pw_page from './pages/Change_password/index.jsx';
-import Page_update_owner from './pages/Page_update_owner/Page_update_owner.jsx';
-import CreateOwner_page from './pages/AddDevice/index.jsx';
+import UpdateDevices from './pages/Page_update_owner/Page_update_owner.jsx';
+import CreateDevice from './pages/AddDevice/index.jsx';
 
 import Devices from './pages/Devices/index.jsx';
-import { GuestRoutes } from './middleware/PrivateRoutes.js';
+import { AuthRoutes, GuestRoutes } from './middleware/PrivateRoutes.js';
+import Login from './pages/authorization/Login/index.jsx';
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route element={<GuestRoutes />}>
+          <Route path="/login" element={<Login />} />
+        </Route>
+        <Route element={<AuthRoutes />}>
           <Route path="/" element={<Devices />} />
-          <Route path="/Devices/add_device/" element={<CreateOwner_page />} />
-          <Route
-            path="/GarageOwner/update/:id"
-            element={<Page_update_owner />}
-          />
+          <Route path="/Devices/add_device/" element={<CreateDevice />} />
+          <Route path="/GarageOwner/update/:id" element={<UpdateDevices />} />
         </Route>
       </Routes>
     </div>
