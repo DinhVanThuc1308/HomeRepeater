@@ -8,7 +8,6 @@ import CreateDevice from './pages/AddDevice/index.jsx';
 import Devices from './pages/Devices/index.jsx';
 import { AuthRoutes, GuestRoutes } from './middleware/PrivateRoutes.js';
 import Login from './pages/authorization/Login/index.jsx';
-
 function App() {
   return (
     <div className="App">
@@ -17,7 +16,8 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Route>
         <Route element={<AuthRoutes />}>
-          <Route path="/" element={<Devices />} />
+          {/* Remove this line from AuthRoutes */}
+          {/* <Route path="/" element={<Devices />} /> */}
           <Route path="/Devices/add_device/" element={<CreateDevice />} />
           <Route path="/GarageOwner/update/:id" element={<UpdateDevices />} />
         </Route>

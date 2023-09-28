@@ -1,17 +1,47 @@
+// src/components/Login.js
+
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
-import './login.css';
+
 import { Button, Form, Input, message } from 'antd';
 import { AuthContext } from '../../../context/auth';
 import { useNavigate } from 'react-router-dom';
+import { GoogleLogin } from 'react-google-login';
+import './login.css'
 
 export default function Login() {
     const auth = useContext(AuthContext);
     const nav = useNavigate();
-    const API = 'http://localhost:1337/api/auth/local';
+    const API = 'http://localhost:1337/api/auth/local'; // Replace with your server's API endpoint
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async values => {
+    // Callback function when Google login is successful
+    const googleLoginSuccess = async (response) => {
+        try {
+            setLoading(true);
+
+            // Send the Google access token to your server for authentication
+            const responseFromServer = await axios.post(
+                'http://localhost:3000', // Replace with your server's endpoint for Google login
+                { token: response.tokenId }
+            );
+
+            auth.setKey(responseFromServer.data.jwt);
+            nav('/');
+        } catch (error) {
+            message.error(error.response.data.error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Callback function when Google login fails
+    const googleLoginFailure = (error) => {
+        console.error('Google login failed:', error);
+    };
+
+    // Handle form submission
+    const handleSubmit = async (values) => {
         try {
             setLoading(true);
             const account = {
@@ -105,6 +135,17 @@ export default function Login() {
                         Login
                     </Button>
                 </Form>
+                <br />
+
+                {/* Google OAuth login button */}
+
+                <GoogleLogin
+                    clientId="519183002002-k9etnseibnre2eiac8s4dkg7684h75bf.apps.googleusercontent.com"
+                    buttonText="Login with Google"
+                    onSuccess={googleLoginSuccess}
+                    onFailure={googleLoginFailure}
+                    cookiePolicy={'single_host_origin'}
+                />
             </div>
         </div>
     );
