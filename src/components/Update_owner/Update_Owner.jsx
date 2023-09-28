@@ -22,16 +22,11 @@ function Update_owner() {
   } = useForm({
     defaultValues: {
       fullname: '',
-      email: '',
-      username: '',
-      password: '',
-      phoneNumber: '',
-      gender: '',
-      dob: '',
-      role: '',
+      DeviceInfo: '',
+      customer: '',
+      public: '',
+      isGetway: '',
       status: '',
-      blocked: undefined,
-      garage: [],
     },
   });
 
@@ -107,36 +102,9 @@ function Update_owner() {
 
   //  call api garage list from api
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredGarages, setFilteredGarages] = useState([]);
 
-  useEffect(() => {
-    // axiosInstance.get(`garages`).then(res => {
-    //   setGarageList(res.data);
-    // });
-    const fetchGarageList = async () => {
-      try {
-        let params = {};
-        params['filters[name][$contains]'] = searchTerm;
-        const res = await updateOwnerAPI.getGarageList(params);
-        console.log('res', res);
-        setFilteredGarages(res.data);
-      } catch (error) {
-        console.log('Failed to fetch garage list: ', error);
-      }
-    };
-    // Set up a timeout variable
-    const debounceTimer = setTimeout(() => {
-      console.log(`Searching for "${searchTerm}"...`);
-      // Call your search function here
-      fetchGarageList();
-    }, 3000);
 
-    // Clear timeout if the component is unmounted
-    return () => clearTimeout(debounceTimer);
-  }, [searchTerm]);
 
-  // search garage
-  // const [garageList, setGarageList] = useState([]);
 
   const handleSearch = e => {
     setSearchTerm(e.target.value);
@@ -174,9 +142,9 @@ function Update_owner() {
         const newArr = arr.map(item => item.id);
         setCheckedBoxes(newArr);
         setValue('fullname', response.fullname);
-        setValue('email', response.email);
-        setValue('username', response.username);
-        setValue('password', response.password);
+        setValue('DeviceInfo', response.DeviceInfo);
+        setValue('customer', response.customer);
+        setValue('public', response.public);
         setValue('phoneNumber', response.phoneNumber);
         setValue('gender', response.gender);
         setValue('dob', moment(response.dob, 'YYYY-MM-DD'));
@@ -222,7 +190,7 @@ function Update_owner() {
           <div className={styles['form-row']}>
             <div className={styles['row-item']}>
               <label htmlFor="" className={styles['title-label']}>
-                Name <span style={{ color: 'red' }}>*</span>{' '}
+                Têb sản phẩm <span style={{ color: 'red' }}>*</span>{' '}
               </label>
               <Controller
                 name="fullname"
@@ -233,164 +201,113 @@ function Update_owner() {
                     {...field}
                     style={{ width: '100%' }}
                     size="large"
-                    placeholder={userList.garages?.name}
+
+                    placeholder={userList.garages?.fullname}
                   />
                 )}
               />
               {errors.fullname && (
-                <p style={{ color: 'red' }}>Please enter your name</p>
+                <p style={{ color: 'red' }}>Nhập vào tên</p>
               )}
             </div>
             <div className={styles['row-item']}>
               <label htmlFor="" className={styles['title-label']}>
-                Email <span style={{ color: 'red' }}>*</span>{' '}
+                Thông tin thiết bị <span style={{ color: 'red' }}>*</span>{' '}
               </label>
               <Controller
-                name="email"
+                name="DeviceInfo"
                 control={control}
-                rules={{ required: true, pattern: /^\S+@\S+$/i }}
+                rules={{ required: true, }}
                 render={({ field }) => (
                   <Input
                     size="large"
                     {...field}
-                    placeholder="Enter owner email"
+                    placeholder="Nhập vào thông tin thiết bị"
                   />
                 )}
               />
-              {errors.email && (
+              {errors.DeviceInfo && (
                 <p style={{ color: 'red' }}>
-                  Please enter a valid email address
+                  Nhập vào thông tin thiết bị
                 </p>
               )}
             </div>
             <div className={styles['row-item']}>
               <label htmlFor="" className={styles['title-label']}>
-                Username <span style={{ color: 'red' }}>*</span>{' '}
+                Khách hàng <span style={{ color: 'red' }}>*</span>{' '}
               </label>
               <Controller
-                name="username"
+                name="customer"
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
                   <Input
                     size="large"
                     {...field}
-                    placeholder="Enter owner username"
+                    placeholder="Nhập vào thông tin khách hàng"
                   />
                 )}
               />
-              {errors.username && (
-                <p style={{ color: 'red' }}>Please enter username</p>
+              {errors.customer && (
+                <p style={{ color: 'red' }}>
+                  Nhập vào thông tin khách hàng
+                </p>
               )}
             </div>
           </div>
+
+
+
+
           <div className={styles['form-row']}>
             <div className={styles['row-item']}>
               <label htmlFor="" className={styles['title-label']}>
-                Password <span style={{ color: 'red' }}>*</span>{' '}
+                Public <span style={{ color: 'red' }}>*</span>{' '}
               </label>
               <Controller
-                name="password"
-                control={control}
-                rules={{ required: true, minLength: 6 }}
-                render={({ field }) => (
-                  <Input.Password
-                    {...field}
-                    style={{ width: '100%' }}
-                    size="large"
-                    placeholder="Enter owner password"
-                  />
-                )}
-              />
-              {errors.password && (
-                <p style={{ color: 'red' }}>Please enter a valid password</p>
-              )}
-            </div>
-            <div className={styles['row-item']}>
-              <label htmlFor="" className={styles['title-label']}>
-                Phone number <span style={{ color: 'red' }}>*</span>{' '}
-              </label>
-              <Controller
-                name="phoneNumber"
-                control={control}
-                rules={{ required: true, minLength: 10, maxLength: 10 }}
-                render={({ field }) => (
-                  <Input
-                    size="large"
-                    {...field}
-                    placeholder="Enter owner phone number"
-                  />
-                )}
-              />
-              {errors.phone && (
-                <p style={{ color: 'red' }}>Please enter a valid phonenumber</p>
-              )}
-            </div>
-            <div className={styles['row-item']}>
-              <label htmlFor="" className={styles['title-label']}>
-                Gender <span style={{ color: 'red' }}>*</span>{' '}
-              </label>
-              <Controller
-                name="gender"
+                name="Public"
                 control={control}
                 rules={{ required: true }}
+                allowClear
                 render={({ field }) => (
                   <Select
                     {...field}
                     size="large"
-                    placeholder="Select owner gender"
+                    placeholder="Chọn trạng thái"
                     allowClear
                   >
-                    <Option value="male">Male</Option>
-                    <Option value="female">Female</Option>
-                    <Option value="Other">Other</Option>
+                    <Option value={true}>Có</Option>
+                    <Option value={false}>Không</Option>
                   </Select>
                 )}
               />
-              {errors.gender && (
-                <p style={{ color: 'red' }}>Please select gender</p>
-              )}
-            </div>
-          </div>
-          <div className={styles['form-row']}>
-            <div className={styles['row-item']}>
-              <label htmlFor="" className={styles['title-label']}>
-                DOB <span style={{ color: 'red' }}>*</span>{' '}
-              </label>
-              <Controller
-                name="dob"
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <DatePicker {...field} size="large"></DatePicker>
-                )}
-              />
-              {errors.dob && (
+
+              {errors.Public && (
                 <p style={{ color: 'red' }}>Please select date of birth</p>
               )}
             </div>
             <div className={styles['row-item']}>
               <label htmlFor="" className={styles['title-label']}>
-                Role <span style={{ color: 'red' }}>*</span>{' '}
+                isGetway <span style={{ color: 'red' }}>*</span>{' '}
               </label>
               <Controller
-                name="role"
+                name="isGetway"
                 control={control}
                 // rules={{ required: true }}
                 render={({ field }) => (
                   <Select
                     {...field}
                     size="large"
-                    placeholder="Select a role"
+                    placeholder="Select a isGetway"
                     allowClear
                   >
-                    <Option value={1}>Admin</Option>
-                    <Option value={2}>User</Option>
+                    <Option value={1}>Có</Option>
+                    <Option value={2}>không</Option>
                   </Select>
                 )}
               />
               {errors.role && (
-                <p style={{ color: 'red' }}>Please select role</p>
+                <p style={{ color: 'red' }}>không được để trống</p>
               )}
             </div>
             <div className={styles['row-item']}>
@@ -419,53 +336,9 @@ function Update_owner() {
             </div>
           </div>
 
-          <div className={styles['choose-container']}>
-            <div className={styles['checkbox-garage']}>
-              <Input
-                size="large"
-                placeholder="Search for garages .."
-                value={searchTerm}
-                onChange={handleSearch}
-              />
-              <div className={styles['checkbox-list']}>
-                {filteredGarages.map(garageName => (
-                  <Checkbox
-                    key={garageName}
-                    style={{ marginLeft: '8px' }}
-                    onChange={onChangeBox}
-                    value={garageName.id}
-                    checked={checkedBoxes.includes(garageName.id)}
-                  >
-                    {garageName.attributes.name}
-                  </Checkbox>
-                ))}
-              </div>
-            </div>
-            <div className={styles['list-garage']}>
-              <label htmlFor="">Select garages ({checkedBoxes.length})</label>
-              {checkedBoxes.map(item => {
-                const IDObject = filteredGarages.find(obj => obj.id === item);
-                if (!IDObject) {
-                  console.error(`IDObject with id ${item} is undefined`);
-                  return null;
-                }
-                console.log(IDObject);
-                return (
-                  <div className={styles['pickitem']} key={item}>
-                    <div className="pickitem-name">
-                      {IDObject.attributes?.name}
-                    </div>
-                    <img
-                      src={binicon}
-                      alt=""
-                      onClick={() => handleDelete(item)}
-                      style={{ cursor: 'pointer', marginLeft: '5px' }}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+
+
+
           <hr style={{ width: '100%' }} />
           <div className={styles['btn-container']}>
             <button type="submit" className={styles['btn-save']}>
